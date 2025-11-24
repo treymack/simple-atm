@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ardalis.Result.AspNetCore" Version="10.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleATM.Domain\SimpleATM.Domain.csproj" />
+    <ProjectReference Include="..\SimpleATM.Infrastructure\SimpleATM.Infrastructure.csproj" />
+    <ProjectReference Include="..\SimpleATM.ServiceDefaults\SimpleATM.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+</Project>

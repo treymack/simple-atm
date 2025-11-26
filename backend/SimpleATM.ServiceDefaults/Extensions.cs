@@ -110,6 +110,8 @@ namespace Microsoft.Extensions.Hosting
 
         public static WebApplication MapDefaultEndpoints(this WebApplication app)
         {
+            // This application reports exceptions in stack traces. Would research how to disable that in non-development envs.
+
             // Adding health checks endpoints to applications in non-development environments has security implications.
             // See https://aka.ms/dotnet/aspire/healthchecks for details before enabling these endpoints in non-development environments.
             if (app.Environment.IsDevelopment())

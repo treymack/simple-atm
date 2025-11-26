@@ -7,6 +7,7 @@ This is a simple web-based ATM application written in C# and Angular.
 - Prerequisites:
   - .NET 10 SDK
   - Node.js 20+
+  - A Container Runtime, maybe Docker Desktop. I'm using Rancher Desktop.
 - Run Aspire
   - Open a terminal in the project root directory
   - Run `dotnet run --project .\SimpleATM.AppHost\`
@@ -39,8 +40,8 @@ Out of Scope
 
 - [ ] Deposits, withdrawals, and transfers need to be atomic operations
 - [ ] Testability for all core features
-- [ ] Data persistence using an in-memory or lightweight database (e.g., SQLite)
-- [ ] Elegant error handling
+- [x] Data persistence using an in-memory or lightweight database. Chose MySQL because it's easy to set up with Aspire.
+- [x] Elegant error handling
   - Use a `Result<T>` pattern for operations that can fail
 
 ## Core Entities
@@ -60,14 +61,14 @@ Out of Scope
 
 ## APIs
 
-- GET /accounts -> Account[]
-- POST /accounts/{id}/deposit -> Result<Account>
+- [x] GET /accounts -> Account[]
+- [x] GET /accounts/{id} -> Account + Transaction[]
+- [x] POST /accounts/{id}/deposit -> Account
   - Request body: { amount: decimal }
-- POST /accounts/{id}/withdraw -> Result<Account>
+- [x] POST /accounts/{id}/withdrawal -> Account
   - Request body: { amount: decimal }
-- POST /accounts/transfer -> Result<(Account from, Account to)> ❓
+- [ ] POST /accounts/transfer -> Account from, Account to
   - Request body: { from_account_id: int, to_account_id: int, amount: decimal, description?: string }
-- GET /accounts/{id}/transactions -> Transaction[]
 
 ## Decision Log
 

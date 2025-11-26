@@ -1,0 +1,57 @@
+### List Accounts
+GET https://localhost:7069/accounts
+
+### List Account with Transactions
+GET https://localhost:7069/accounts/1
+
+### List Account Transactions - Not Found
+GET https://localhost:7069/accounts/99
+
+### Deposit Success
+POST https://localhost:7069/accounts/1/deposit
+Content-Type: application/json
+
+{
+  "amount": 100.00
+}
+
+### Deposit Failure - Negative Amount
+POST https://localhost:7069/accounts/1/deposit
+Content-Type: application/json
+
+{
+  "amount": -100.00
+}
+
+### Deposit Failure - Exceeds Max Balance
+POST https://localhost:7069/accounts/1/deposit
+Content-Type: application/json
+
+{
+  "amount": 1000000.00
+}
+
+### Withdrawal Success
+POST https://localhost:7069/accounts/1/withdrawal
+Content-Type: application/json
+
+{
+  "amount": 50.00
+}
+
+### Withdrawal Failure - Negative Amount
+POST https://localhost:7069/accounts/1/withdrawal
+Content-Type: application/json
+
+{
+  "amount": -50.00
+}
+
+### Withdrawal Failure - Insufficient Funds
+POST https://localhost:7069/accounts/1/withdrawal
+Content-Type: application/json
+
+{
+  "amount": 1000000.00
+}
+

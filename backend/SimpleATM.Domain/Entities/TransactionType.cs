@@ -1,5 +1,8 @@
 ﻿namespace SimpleATM.Domain.Entities;
 
-public class TransactionType
+public enum TransactionType
 {
+    Unknown = 0,
+    Deposit = 1,
+    Withdrawal = 2,
 }

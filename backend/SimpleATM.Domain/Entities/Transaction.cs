@@ -2,11 +2,11 @@
 
 public record Transaction(
     int Id,
-    Account FromAccount,
-    Account ToAccount,
+    int FromAccountId,
+    int ToAccountId,
     TransactionType type,
     decimal Amount,
-    DateTimeOffset Timestamp,
-    string? Description = null
+    DateTime Timestamp,
+    string Description
     )
 { }

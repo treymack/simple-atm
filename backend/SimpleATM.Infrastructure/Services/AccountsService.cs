@@ -76,4 +76,19 @@ public class AccountsService(IAccountsRepository accountsRepository) : IAccounts
 
         return await accountsRepository.WithdrawAsync(accountId, req.Amount, "Web Withdrawal");
     }
+
+    public async Task<Result<TransferResponse>> TransferAsync(TransferRequest transferRequest)
+    {
+        using var trans = await accountsRepository.BeginTransactionAsync();
+
+        var withdrawResult = await WithdrawAsync(
+            transferRequest.FromAccountId, new WithdrawalRequest(transferRequest.Amount));
+
+        var depositResult = await DepositAsync(
+            transferRequest.ToAccountId, new DepositRequest(transferRequest.Amount));
+
+        await accountsRepository.CommitTransactionAsync();
+
+        return new TransferResponse(withdrawResult.Value, depositResult.Value);
+    }
 }

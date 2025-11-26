@@ -1,6 +1,6 @@
 # Simple ATM
 
-This is a simple web-based ATM application written in C# and Angular.
+This is a simple web-based ATM application written in C#.
 
 ## How To Run
 
@@ -12,7 +12,8 @@ This is a simple web-based ATM application written in C# and Angular.
   - Open a terminal in the project root directory
   - Run `dotnet run --project .\SimpleATM.AppHost\`
   - Click the link in the terminal to open the Aspire dashboard in your browser
-  - From the Aspire dashboard, you can browse the frontend and backend projects
+  - From the Aspire dashboard, you can browse the backend project and database
+  - Use the api.http file in the backend/SimpleATM.Api folder to test the API endpoints
 
 ## Features
 
@@ -38,7 +39,7 @@ Out of Scope
 
 ### Non-Functional Requirements
 
-- [ ] Deposits, withdrawals, and transfers need to be atomic operations
+- [x] Deposits, withdrawals, and transfers need to be atomic operations
 - [ ] Testability for all core features
 - [x] Data persistence using an in-memory or lightweight database. Chose MySQL because it's easy to set up with Aspire.
 - [x] Elegant error handling
@@ -69,6 +70,7 @@ Out of Scope
   - Request body: { amount: decimal }
 - [ ] POST /accounts/transfer -> Account from, Account to
   - Request body: { from_account_id: int, to_account_id: int, amount: decimal, description?: string }
+  - Needs work. The response is funny and transferring negative money does not error properly.
 
 ## Decision Log
 
@@ -77,8 +79,10 @@ Usually these would be in a dedicated folder for Architecture Decision Records, 
 - 2025-11-23: Do NOT Drive API and client implementation from an OpenAPI spec
   - Usually I would opt to start with an OpenAPI spec to ensure clear API contract between frontend and backend
   - In this case, it's more complication than it's worth given the simplicity of the API and the time constraints
-- 2025-11-23: Use SQLite for data persistence
-  - SQLite is lightweight and easy to set up, making it ideal for this simple application
-  - It provides sufficient functionality to meet the data persistence requirements without the overhead of a full database server
+- ~~2025-11-23: Use SQLite for data persistence~~
+  - ~~SQLite is lightweight and easy to set up, making it ideal for this simple application~~
+  - ~~It provides sufficient functionality to meet the data persistence requirements without the overhead of a full database server~~
 - 2025-11-23: Use Angular for frontend
   - Considered Vue, but the time limitations and my familiarity with Angular made it the better choice
+- 2025-11-25: Use MySQL for data persistence
+  - Aspire makes it easy to set up a MySQL container

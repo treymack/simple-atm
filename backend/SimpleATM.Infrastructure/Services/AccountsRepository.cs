@@ -48,13 +48,12 @@ public class AccountsRepository(MySqlConnection db) : IAccountsRepository
 
     public Task<IEnumerable<Account>> GetAccounts()
     {
-        return db.QueryAsync<Account>("SELECT Id, Type, Balance FROM Accounts");
+        return db.QueryAsync<Account>("SELECT Id, Type, Balance FROM Accounts",
+            transaction: currentTransactionToken?.Transaction);
     }
 
     public async Task<Account> DepositAsync(int accountId, decimal amount, string description)
     {
-        using var trans = db.BeginTransaction();
-
         var sql = @"
         INSERT INTO Transactions (ToAccountId, Type, Amount, Description)
         VALUES (@AccountId, 'deposit', @Amount, @Description);
@@ -68,9 +67,7 @@ public class AccountsRepository(MySqlConnection db) : IAccountsRepository
         var res = await db.QuerySingleAsync<Account>(
             sql: sql,
             param: new { Amount = amount, AccountId = accountId, Description = description },
-            transaction: trans);
-
-        await trans.CommitAsync();
+            transaction: currentTransactionToken?.Transaction);
 
         return res;
     }
@@ -91,13 +88,12 @@ public class AccountsRepository(MySqlConnection db) : IAccountsRepository
             FROM Transactions
             WHERE FromAccountId = @AccountId OR ToAccountId = @AccountId
             ORDER BY Timestamp DESC",
-            param: new { AccountId = accountId });
+            param: new { AccountId = accountId },
+            transaction: currentTransactionToken?.Transaction);
     }
 
     public async Task<Account> WithdrawAsync(int accountId, decimal amount, string description)
     {
-        using var trans = db.BeginTransaction();
-
         var sql = @"
             INSERT INTO Transactions (FromAccountId, Type, Amount, Description)
             VALUES (@AccountId, 'withdrawal', @Amount, @Description);
@@ -110,10 +106,22 @@ public class AccountsRepository(MySqlConnection db) : IAccountsRepository
         var res = await db.QuerySingleAsync<Account>(
             sql: sql,
             param: new { Amount = amount, AccountId = accountId, Description = description },
-            transaction: trans);
-
-        await trans.CommitAsync();
+            transaction: currentTransactionToken?.Transaction);
 
         return res;
+    }
+
+    private TransactionToken? currentTransactionToken;
+    public async Task<IDisposable> BeginTransactionAsync()
+    {
+        currentTransactionToken = new TransactionToken(
+            await db.BeginTransactionAsync(),
+            () => currentTransactionToken = null);
+        return currentTransactionToken;
+    }
+
+    public async Task CommitTransactionAsync()
+    {
+        await currentTransactionToken!.Transaction.CommitAsync();
     }
 }

@@ -1,4 +1,4 @@
-### List Accounts
+### List Accounts - Will randomly fail to demonstrate error handling
 GET https://localhost:7069/accounts
 
 ### List Account with Transactions
@@ -55,3 +55,22 @@ Content-Type: application/json
   "amount": 1000000.00
 }
 
+### Transfer Success
+POST https://localhost:7069/accounts/transfer
+Content-Type: application/json
+
+{
+  "fromAccountId": 1,
+  "toAccountId": 2,
+  "amount": 100.00
+}
+
+### Transfer Failure - Negative Amount
+POST https://localhost:7069/accounts/transfer
+Content-Type: application/json
+
+{
+  "fromAccountId": 1,
+  "toAccountId": 2,
+  "amount": -100.00
+}

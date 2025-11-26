@@ -14,6 +14,7 @@ This is a simple web-based ATM application written in C#.
   - Click the link in the terminal to open the Aspire dashboard in your browser
   - From the Aspire dashboard, you can browse the backend project and database
   - Use the api.http file in the backend/SimpleATM.Api folder to test the API endpoints
+    - You can use the REST Client extension in VS Code to run the requests in the api.http file
 
 ## Features
 
@@ -40,7 +41,7 @@ Out of Scope
 ### Non-Functional Requirements
 
 - [x] Deposits, withdrawals, and transfers need to be atomic operations
-- [ ] Testability for all core features
+- [ ] Tests for all core features
 - [x] Data persistence using an in-memory or lightweight database. Chose MySQL because it's easy to set up with Aspire.
 - [x] Elegant error handling
   - Use a `Result<T>` pattern for operations that can fail

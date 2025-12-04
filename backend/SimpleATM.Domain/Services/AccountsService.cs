@@ -1,9 +1,8 @@
 ﻿using Ardalis.Result;
 using SimpleATM.Domain.DTOs;
 using SimpleATM.Domain.Entities;
-using SimpleATM.Domain.Services;
 
-namespace SimpleATM.Infrastructure.Services;
+namespace SimpleATM.Domain.Services;
 
 public class AccountsService(IAccountsRepository accountsRepository) : IAccountsService
 {
@@ -87,8 +86,12 @@ public class AccountsService(IAccountsRepository accountsRepository) : IAccounts
         var depositResult = await DepositAsync(
             transferRequest.ToAccountId, new DepositRequest(transferRequest.Amount));
 
-        await accountsRepository.CommitTransactionAsync();
+        if (withdrawResult.IsSuccess && depositResult.IsSuccess)
+        {
+            await accountsRepository.CommitTransactionAsync();
+            return Result.Success(new TransferResponse(withdrawResult.Value, depositResult.Value));
+        }
 
-        return new TransferResponse(withdrawResult.Value, depositResult.Value);
+        return Result<TransferResponse>.Error("Transfer failed.");
     }
 }

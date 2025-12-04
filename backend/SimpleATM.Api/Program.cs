@@ -56,7 +56,7 @@ app.MapPost("/accounts/{accountId}/withdrawal",
 app.MapPost("/accounts/transfer",
     async ([FromServices] IAccountsService accountsService, TransferRequest transferRequest) =>
 {
-    return (await accountsService.TransferAsync(transferRequest));
+    return (await accountsService.TransferAsync(transferRequest)).ToMinimalApiResult();
 });
 
 app.Run();

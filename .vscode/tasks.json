@@ -24,12 +24,15 @@
       "problemMatcher": "$msCompile"
     },
     {
-      "label": "run aspire apphost",
+      "label": "watch aspire apphost",
       "command": "dotnet",
       "type": "shell",
-      "args": ["run", "--project", "SimpleATM.AppHost"],
+      "args": ["watch", "--project", "SimpleATM.AppHost"],
       "options": {
         "cwd": "${workspaceFolder}"
+      },
+      "icon": {
+        "id": "eye"
       },
       "problemMatcher": ["$msCompile"]
     }

@@ -78,6 +78,11 @@ public class AccountsService(IAccountsRepository accountsRepository) : IAccounts
 
     public async Task<Result<TransferResponse>> TransferAsync(TransferRequest transferRequest)
     {
+        if (transferRequest.Amount <= 0)
+        {
+            return Result<TransferResponse>.Error("Transfer amount must be greater than zero.");
+        }
+
         using var trans = await accountsRepository.BeginTransactionAsync();
 
         var withdrawResult = await WithdrawAsync(

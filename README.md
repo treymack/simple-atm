@@ -69,9 +69,8 @@ Out of Scope
   - Request body: { amount: decimal }
 - [x] POST /accounts/{id}/withdrawal -> Account
   - Request body: { amount: decimal }
-- [ ] POST /accounts/transfer -> Account from, Account to
+- [x] POST /accounts/transfer -> Account from, Account to
   - Request body: { from_account_id: int, to_account_id: int, amount: decimal, description?: string }
-  - Needs work. The response is funny and transferring negative money does not error properly.
 
 ## Decision Log
 

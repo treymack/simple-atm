@@ -41,7 +41,7 @@ Out of Scope
 ### Non-Functional Requirements
 
 - [x] Deposits, withdrawals, and transfers need to be atomic operations
-- [ ] Tests for all core features
+- [x] Tests for all core features
 - [x] Data persistence using an in-memory or lightweight database. Chose MySQL because it's easy to set up with Aspire.
 - [x] Elegant error handling
   - Use a `Result<T>` pattern for operations that can fail

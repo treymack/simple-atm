@@ -22,6 +22,16 @@
         "reveal": "silent"
       },
       "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "run aspire apphost",
+      "command": "dotnet",
+      "type": "shell",
+      "args": ["run", "--project", "SimpleATM.AppHost"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": ["$msCompile"]
     }
   ]
 }
